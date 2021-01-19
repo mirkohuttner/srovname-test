@@ -1,0 +1,9 @@
+log/*
+temp/*
+www/data/*
+.idea/*
+vendor/*
+!.gitignore
+!.htaccess
+!web.config
+config/local.neon

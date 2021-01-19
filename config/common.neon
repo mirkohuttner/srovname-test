@@ -1,0 +1,43 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+	database:
+		port: 3306
+		host: localhost
+		driver: mysqli
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+session:
+	expiration: 14 days
+
+dibi:
+	host: %database.host%
+	username: %database.user%
+	password: %database.password%
+	database: %database.dbname%
+	port: %database.port%
+	lazy: true
+
+decorator:
+	App\Model\Facade\BaseFacade:
+		inject: true
+
+extensions:
+	dibi: Dibi\Bridges\Nette\DibiExtension22
+
+services:
+	- App\Router\RouterFactory::createRouter
+
+	# facades
+	- App\Model\Facade\ProductFacade
+	- App\Model\Facade\AffiliateUrlFacade
+
+	# services
+	- App\Model\Service\LogAffiliateClickService
+	- App\Model\Service\ProcessAffiliateHashAndGetRedirectUrlService
